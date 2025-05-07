@@ -1,13 +1,13 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
- 
+
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 100px)');
- 
+
 function closedOnEscape(e) {
   if (e.code === 'Escape') {
     const utility = document.getElementById('utility');
-    const navUtility= utility.querySelector('.nav-utility');
+    const navUtility = utility.querySelector('.nav-utility');
     const languageExpanded = lang.querySelector('[aria-expanded="true"]');
     if (languageExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
@@ -20,7 +20,7 @@ function closedOnEscape(e) {
     }
   }
 }
- 
+
 function opensOnKeydown(e) {
   const focused = document.activeElement;
   const isNavDrop = focused.className === 'nav-drop';
@@ -31,11 +31,11 @@ function opensOnKeydown(e) {
     focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
   }
 }
- 
+
 function focuslangSection() {
   document.activeElement.addEventListener('keydown', opensOnKeydown);
 }
- 
+
 /**
  * Toggles all nav sections
  * @param {Element} sections The container element
@@ -51,7 +51,7 @@ function toggleAlllangSections(sections, expanded = false) {
     section.setAttribute('aria-expanded', expanded);
   });
 }
- 
+
 /**
  * Toggles the entire nav
  * @param {Element} nav The container element
@@ -65,9 +65,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
- 
 }
- 
+
 function togglesMenu(utility, lang, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : utility.getAttribute('aria-expanded') === 'true';
   const button = utility.querySelector('.nav-drop');
@@ -75,7 +74,7 @@ function togglesMenu(utility, lang, forceExpanded = null) {
   utility.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAlllangSections(lang, expanded || isDesktop.matches ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
- 
+
   // enable nav dropdown keyboard accessibility
   const navDrops = lang.querySelectorAll('.nav-drop');
   if (isDesktop.matches) {
@@ -93,7 +92,7 @@ function togglesMenu(utility, lang, forceExpanded = null) {
       drop.removeEventListener('focus', focuslangSection);
     });
   }
- 
+
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
@@ -102,8 +101,7 @@ function togglesMenu(utility, lang, forceExpanded = null) {
     window.removeEventListener('keydown', closedOnEscape);
   }
 }
- 
- 
+
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -113,24 +111,24 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
- 
+
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
   let totalChildren = fragment.childElementCount;
- 
-while (fragment.firstElementChild && totalChildren > 2) {
+
+  while (fragment.firstElementChild && totalChildren > 2) {
     nav.append(fragment.firstElementChild);
     totalChildren--;
-}
- 
+  }
+
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
   });
- 
+
   const navBrand = nav.querySelector('.nav-brand');
   const brandLink = navBrand.querySelector('.button');
   if (brandLink) {
@@ -142,8 +140,7 @@ while (fragment.firstElementChild && totalChildren > 2) {
   anchorBrandNode.href = '/';
   anchorBrandNode.append(brandImg);
   navBrand.firstElementChild.append(anchorBrandNode);
- 
- 
+
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
@@ -157,8 +154,7 @@ while (fragment.firstElementChild && totalChildren > 2) {
       });
     });
   }
- 
- 
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
@@ -171,41 +167,39 @@ while (fragment.firstElementChild && totalChildren > 2) {
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
- 
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
- 
-  const regForm=document.createElement('div');
-  regForm.id='regForm';
- 
+
+  const regForm = document.createElement('div');
+  regForm.id = 'regForm';
+
   regForm.append(fragment.lastElementChild.previousElementSibling);
- 
-  regForm.firstElementChild.style.display='none';
- 
- 
+
+  regForm.firstElementChild.style.display = 'none';
+
   const utility = document.createElement('div');
   utility.append(fragment.lastElementChild);
-  utility.id='utility';
+  utility.id = 'utility';
   utility.firstElementChild.classList.add('nav-utility');
- 
-  const navUtility=utility.querySelector('.nav-utility');
-  const signin=navUtility.querySelector('p');
-  if (signin){
-    signin.className='signin';
+
+  const navUtility = utility.querySelector('.nav-utility');
+  const signin = navUtility.querySelector('p');
+  if (signin) {
+    signin.className = 'signin';
   }
   signin.addEventListener('click', (event) => {
     event.stopPropagation();
     if (isDesktop.matches) {
-        regForm.firstElementChild.style.display =
+      regForm.firstElementChild.style.display =
             regForm.firstElementChild.style.display === 'block' ? 'none' : 'block';
     }
-});
-  const lang=navUtility.querySelector('ul');
-  if (lang){
-    lang.parentElement.className='lang-nav';
- 
+  });
+  const lang = navUtility.querySelector('ul');
+  if (lang) {
+    lang.parentElement.className = 'lang-nav';
   }
   if (lang) {
     lang.querySelectorAll('.lang-nav > ul > li').forEach((language) => {
@@ -215,44 +209,39 @@ while (fragment.firstElementChild && totalChildren > 2) {
           const expanded = language.getAttribute('aria-expanded') === 'true';
           toggleAlllangSections(lang);
           language.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-         
         }
       });
     });
   }
   window.addEventListener('click', (event) => {
     if (regForm.firstElementChild.style.display === 'block' && !regForm.contains(event.target)) {
- 
-        regForm.firstElementChild.style.display = 'none';
+      regForm.firstElementChild.style.display = 'none';
     }
     const isExpanded = lang.firstElementChild.getAttribute('aria-expanded') === 'true';
     if (isExpanded && !lang.firstElementChild.contains(event.target)) {
-        lang.firstElementChild.setAttribute('aria-expanded', 'false');
-       
+      lang.firstElementChild.setAttribute('aria-expanded', 'false');
     }
   });
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
-   
+
     if (window.scrollY > 0) {
-        nav.classList.add('scrolled');
+      nav.classList.add('scrolled');
     } else {
-        nav.classList.remove('scrolled');
+      nav.classList.remove('scrolled');
     }
-});
- 
-  //nav-tools
-  const searchBox=nav.querySelector('.nav-tools');
-  const searchContainer=document.createElement('div');
+  });
+
+  // nav-tools
+  const searchBox = nav.querySelector('.nav-tools');
+  const searchContainer = document.createElement('div');
   searchContainer.classList.add('search-container');
-  searchContainer.innerHTML=`<form action="https://www.google.com/search" method="get"><input type="text" name="q" placeholder="SEARCH" required></form>`
+  searchContainer.innerHTML = '<form action="https://www.google.com/search" method="get"><input type="text" name="q" placeholder="SEARCH" required></form>';
   searchBox.append(searchContainer);
- 
- 
+
   block.prepend(utility);
   block.append(regForm);
   nav.setAttribute('aria-expanded', 'false');
   decorateIcons(block);
   block.append(nav);
- 
 }

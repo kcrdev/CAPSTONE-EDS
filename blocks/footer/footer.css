@@ -52,8 +52,8 @@ footer {
  
       > li:nth-child(5){
         position: relative;
-        bottom:11px;
-        left:1px;
+        bottom:8px;
+        font-size: large;
       }
  
       > li:nth-child(5) span{

@@ -21,4 +21,3 @@ export function addClassToElement(element, ...classes) {
     addClassToElement(element, ...classes);
     return element;
   }
-  
