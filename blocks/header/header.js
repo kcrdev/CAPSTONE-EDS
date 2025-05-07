@@ -193,8 +193,7 @@ export default async function decorate(block) {
   signin.addEventListener('click', (event) => {
     event.stopPropagation();
     if (isDesktop.matches) {
-      regForm.firstElementChild.style.display =
-            regForm.firstElementChild.style.display === 'block' ? 'none' : 'block';
+      regForm.firstElementChild.style.display = regForm.firstElementChild.style.display === 'block' ? 'none' : 'block';
     }
   });
   const lang = navUtility.querySelector('ul');
