@@ -1,6 +1,6 @@
 export default function decorate(block) {
   if (block.children.length > 1) {
-        //DOM Manipulation
+    //DOM Manipulation
 
     const unorderedList = document.createElement("ul");
     let carouselItems = block.querySelectorAll(".carousel.block>div");
@@ -27,7 +27,7 @@ export default function decorate(block) {
                                     </button>`;
     document.querySelector("div.carousel.block").append(buttonContainers);
 
-        //Functionality
+    //Functionality
     const carouselWrapper = document.querySelector(".carousel-wrapper");
     const prevButton = carouselWrapper.querySelector(".action--previous");
     const nextButton = carouselWrapper.querySelector(".action--next");
@@ -44,8 +44,7 @@ export default function decorate(block) {
       });
     }
     function showPrevious() {
-      currentIndex =
-        (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+      currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
       updateCarousel();
     }
     function showNext() {

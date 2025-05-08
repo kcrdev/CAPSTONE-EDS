@@ -15,10 +15,21 @@ module.exports = {
     // 'linebreak-style': ['error', 'windows'], // enforce unix linebreaks
     "linebreak-style": "off",
     "no-param-reassign": [2, { props: false }], // allow modifying properties of param
-    quotes: "off",
+    "quotes": "off",
     "object-curly-spacing": "off",
     "implicit-arrow-linebreak": "off",
     "no-undef": "off",
     "object-curly-newline": "off",
+    'no-inner-declarations': 'off',
+    'no-unused-vars': 'off',
+    'no-shadow': 'off',
+    'quote-props': 'off',
+    'eqeqeq': 'off',
+    'prefer-const': 'off',
+    'spaced-comment': 'off',
+    'no-plusplus': 'off',
+    'space-comment': 'off',
+    'prefer-template': 'off',
+    'no-console': 'off',
   },
 };

@@ -11,16 +11,29 @@
     > .form-wrapper {
         > .form.block {
             >form {
-                padding-left: 30px;
+                padding-left: 0;
                 >.field-wrapper {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    position: relative;
+                    justify-content: flex-start;
+                    
                     > label {
                         font-size: 18px;
                         padding-right: 10px;
+                        min-width: 100px;
+                        position: relative;
                     }
 
                     > label:first-child::after {
                         content: ' :';
                         color: #ebebeb;
+                        position: absolute;
+                        right: -5px;
+                        top: 50%;
+                        transform: translateY(-50%);
                     }
 
                     > h4 {
@@ -28,11 +41,23 @@
                         font-weight: 500;
                         border-bottom:#ffea00 dotted;
                         padding-bottom: 3px;
+                        margin-left: 0;
+                        text-align: left;
+                    }
+                    
+                    > input[type="text"],
+                    > input[type="email"]{
+                        margin-left: 15px;
+                        width: 250px;
+                        padding: 5px;
+                        background-color: #ffffff;
+                        border: 1px solid #cccccc;
+                        border-radius: 4px;
                     }
 
                     > input[type="checkbox"]{
-                       margin-left: 30px;
-                       margin-right: 5px;
+                        margin-left: 5px;
+                        margin-right: 5px;
                     }
 
                     hr {
